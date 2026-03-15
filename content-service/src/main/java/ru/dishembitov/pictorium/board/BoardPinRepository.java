@@ -1,0 +1,20 @@
+package ru.dishembitov.pictorium.board;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
+public interface BoardPinRepository extends JpaRepository<BoardPin, UUID> {
+
+    boolean existsByBoardIdAndPinId(UUID boardId, UUID pinId);
+
+    Optional<BoardPin> findByBoardIdAndPinId(UUID boardId, UUID pinId);
+
+    @Query("SELECT COUNT(bp) > 0 FROM BoardPin bp WHERE bp.board.userId = :userId AND bp.pin.id = :pinId")
+    boolean isPinSavedByUser(@Param("userId") String userId, @Param("pinId") UUID pinId);
+}

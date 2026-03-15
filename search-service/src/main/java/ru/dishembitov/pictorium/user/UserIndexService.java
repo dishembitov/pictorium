@@ -1,0 +1,20 @@
+package ru.dishembitov.pictorium.user;
+
+import ru.dishembitov.pictorium.kafka.event.UserEvent;
+
+import java.util.Optional;
+
+public interface UserIndexService {
+
+    void indexUser(UserEvent event);
+
+    void updateUser(UserEvent event);
+
+    void updateUserCounters(UserEvent event);
+
+    void deleteUser(String userId);
+
+    Optional<UserDocument> findById(String userId);
+
+    long count();
+}
